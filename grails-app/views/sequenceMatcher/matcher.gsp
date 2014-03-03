@@ -79,13 +79,25 @@
 				}
 			}
 		</style>
+		<script type="text/javascript">
+			function isATCG(e) {
+			    var chr = String.fromCharCode(e.which);
+			    return "aAcCtTgG".indexOf(chr)>=0;
+			};
+		</script>
 	</head>
 	<body>
 		<div id="status" role="complementary">
 		</div>
 		<div id="page-body" role="main">
 			<g:form name="sequenceForm" controller="SequenceMatcher" action="index">
-				 <g:textField name="NucleotideSequence" value="${NucleotideSequence}"/>
+				<label for="NucleotideSequence">Enter sequence:</label>
+				<input 	type="text" 
+						name="NucleotideSequence" 
+						id="NucleotideSequence" 
+						value="${NucleotideSequence}"
+						style="text-transform:uppercase"
+						onkeypress="return isATCG(event)"/>
 				 <g:actionSubmit value="Get Match"  action="match"/>
 			</g:form>
 			<div><g:textArea name="MatchingSequence" value="${sequenceMatch}"></g:textArea></div>

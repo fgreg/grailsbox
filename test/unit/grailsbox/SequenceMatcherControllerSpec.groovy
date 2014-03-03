@@ -46,4 +46,46 @@ class SequenceMatcherControllerSpec extends Specification {
 			sequence = "TAG"
 			sequenceMatch = "ATC"
 	}
+	
+	def 'test invalid input ignored'() {
+		
+				
+		given:
+			new DnaService().getMatch(sequence) >> sequenceMatch
+			controller.params.NucleotideSequence = sequence
+		
+		
+		when:
+			controller.match()
+
+			
+		then:
+			model.sequenceMatch == sequenceMatch
+			model.NucleotideSequence == returnedSequence
+		
+		where:
+			sequence = "TdviAplG"
+			returnedSequence = "TAG"
+			sequenceMatch = "ATC"
+	}
+	
+	def 'test input capitalized'(){
+		given:
+			new DnaService().getMatch(sequence) >> sequenceMatch
+			controller.params.NucleotideSequence = sequence
+	
+	
+		when:
+			controller.match()
+	
+			
+		then:
+			model.sequenceMatch == sequenceMatch
+			model.NucleotideSequence == returnedSequence
+		
+		where:
+			sequence = "tag"
+			returnedSequence = "TAG"
+			sequenceMatch = "ATC"
+	}
 }

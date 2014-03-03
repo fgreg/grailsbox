@@ -10,8 +10,12 @@ class SequenceMatcherController {
 	
 	def match(){
 		
-		def match = dnaService.getMatch(params.NucleotideSequence)
+		def seq = params.NucleotideSequence.toUpperCase().toCharArray() as List
+		seq.retainAll(Nucleotide.values().collect(){it.code}.toArray())
+		seq = seq.join("")
 		
-		render(view: "matcher", model: [sequenceMatch:match, NucleotideSequence:params.NucleotideSequence])
+		def match = dnaService.getMatch(seq)
+		
+		render(view: "matcher", model: [sequenceMatch:match, NucleotideSequence:seq])
 	}
 }
