@@ -1,5 +1,7 @@
 package grailsbox
 
+import grails.converters.JSON
+
 class SequenceMatcherController {
 
 	DnaService dnaService
@@ -16,6 +18,7 @@ class SequenceMatcherController {
 		
 		def match = dnaService.getMatch(seq)
 		
-		render(view: "matcher", model: [sequenceMatch:match, NucleotideSequence:seq])
+		render ([sequence:seq, sequenceMatch:match] as JSON)
 	}
+	
 }

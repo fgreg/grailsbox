@@ -79,7 +79,32 @@
 				}
 			}
 		</style>
+		<g:javascript library='jquery' />
+    	<r:layoutResources/>
 		<script type="text/javascript">
+			$(document).ready(function(){
+				
+			    $("#nsInput").keypress(function( event ){
+				    if(isATCG( event )){
+
+						$.get( "${g.createLink(controller:'SequenceMatcher',action:'match')}" ,
+							{NucleotideSequence: $(this).val() + String.fromCharCode(event.which)},
+							function(data) {
+								$('#sequence').html(data.sequence);
+								$('#sequenceMatch').html(data.sequenceMatch);
+							}
+						)
+						
+					    
+				    }else{
+					    return false;
+				    }
+				    return true;
+			    });
+
+			    $("input[value='Get Match']").hide()
+			});
+		
 			function isATCG(e) {
 			    var chr = String.fromCharCode(e.which);
 			    return "aAcCtTgG".indexOf(chr)>=0;
@@ -94,13 +119,13 @@
 				<label for="NucleotideSequence">Enter sequence:</label>
 				<input 	type="text" 
 						name="NucleotideSequence" 
-						id="NucleotideSequence" 
+						id="nsInput" 
 						value="${NucleotideSequence}"
-						style="text-transform:uppercase"
-						onkeypress="return isATCG(event)"/>
+						style="text-transform:uppercase"/>
 				 <g:actionSubmit value="Get Match"  action="match"/>
 			</g:form>
-			<div><g:textArea name="MatchingSequence" value="${sequenceMatch}"></g:textArea></div>
+			<div id="sequence"></div>
+			<div id="sequenceMatch"></div>
 		</div>
 	</body>
 </html>

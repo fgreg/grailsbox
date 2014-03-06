@@ -1,7 +1,6 @@
 package grailsbox
 
-import grails.test.mixin.Mock
-import grails.test.mixin.TestFor
+import grails.test.mixin.*
 import spock.lang.Specification
 
 /**
@@ -35,12 +34,12 @@ class SequenceMatcherControllerSpec extends Specification {
 		
 		
 		when:
-			controller.match()
+			def model = controller.match()
 
 			
 		then:
-			model.sequenceMatch == sequenceMatch
-			model.NucleotideSequence == sequence
+			response.json.sequence == sequence
+			response.json.sequenceMatch == sequenceMatch
 		
 		where:
 			sequence = "TAG"
@@ -56,12 +55,12 @@ class SequenceMatcherControllerSpec extends Specification {
 		
 		
 		when:
-			controller.match()
+			def model = controller.match()
 
 			
 		then:
-			model.sequenceMatch == sequenceMatch
-			model.NucleotideSequence == returnedSequence
+			response.json.sequence == returnedSequence
+			response.json.sequenceMatch == sequenceMatch
 		
 		where:
 			sequence = "TdviAplG"
@@ -76,12 +75,12 @@ class SequenceMatcherControllerSpec extends Specification {
 	
 	
 		when:
-			controller.match()
+			def model = controller.match()
 	
 			
 		then:
-			model.sequenceMatch == sequenceMatch
-			model.NucleotideSequence == returnedSequence
+			response.json.sequence == returnedSequence
+			response.json.sequenceMatch == sequenceMatch
 		
 		where:
 			sequence = "tag"
